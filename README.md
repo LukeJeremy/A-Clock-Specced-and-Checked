@@ -1,4 +1,4 @@
-# A Specified Clock
+# A Clock: Specified and Checked
 A simple clock to demonstrate:
 1. Model checking with TLA+,
 1. Model-based testing with FsCheck, and
