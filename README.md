@@ -1,5 +1,8 @@
 # A Specified Clock
-A simple clock to demonstrate model checking with TLA+ and model-based testing with FsCheck.
+A simple clock to demonstrate:
+1. Model checking with TLA+,
+1. Model-based testing with FsCheck, and
+1. The analogy between hierarchical TLA+ specifications and model-based testing.
 
 # TODO
 - [x] Add a hierarchical TLA+ specification of a simple clock
