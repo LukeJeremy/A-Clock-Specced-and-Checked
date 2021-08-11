@@ -4,7 +4,7 @@ It seems obvious to me that in any sensible definition of implementation,
 a clock that displays hours, minutes, and seconds should implement the
 specification of a clock that displays hours and minutes. I realized in 1983
 that the simplest way to ensure that this is true is to require that all
-specifications allow stuttering steps—steps in which the state of the system
+specifications allow stuttering stepsï¿½steps in which the state of the system
 does not change.
 
 Steps of an hour/minute/second clock in which only the seconds change
@@ -20,15 +20,19 @@ https://lamport.azurewebsites.net/tla/advanced.html
 
 EXTENDS Integers, Naturals
 
+(* State variables *)
 VARIABLES h, m, s
-
 vars == <<h, m, s>>
 
+(* The clock may start at any valid time *)
 Init == /\ h \in 0..23
         /\ m \in 0..59
         /\ s \in 0..59
 
 (* AnalogClockHoursMinutes only allows increments by one *)
+(* This unnecessarily long-winded spec of a clock allows you to easily
+   introduce a bug (by changing almost anything below) and see that
+   the model checker detects violations of the invariant. *)
 Tick == IF m = 3 /\ s = 59
         THEN /\ m' = 5
              /\ s' = 0
@@ -67,6 +71,9 @@ Spec == Init /\ [][Tick]_vars /\ WF_vars(Tick)
 
 THEOREM Spec => []TypeOK
 
+(* Specify that an Hours-Minutes-Seconds clock is an instance of an Hours-Minutes
+   clock. Therefore, the AnalogClockHoursMinutesSeconds spec should satisfy the
+   invariants of the AnalogClockHoursMinutes spec. *)
 AnalogHoursMinutesClock == INSTANCE AnalogClockHoursMinutes WITH h <- h, m <- m
 THEOREM Spec => AnalogHoursMinutesClock!Spec
 =============================================================================
